@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novruz Qaçışı 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rakkas&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #ffb300;
+  --red: #e53935;
+  --orange: #ff6f00;
+  --green: #2e7d32;
+  --dark: #1b1b2f;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: linear-gradient(135deg,#0d1b2a 0%,#1a2a1a 50%,#2a0d1b 100%);
+  font-family:'Tajawal',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before {
+  content:'';
+  position:fixed; bottom:0; left:0; right:0; height:200px;
+  background:radial-gradient(ellipse at 50% 100%,#ff6b00 0%,#e53935 40%,transparent 70%);
+  opacity:.2; animation:fireGlow 2s ease-in-out infinite alternate;
+  pointer-events:none; z-index:0;
+}
+@keyframes fireGlow { from{opacity:.15;height:180px} to{opacity:.3;height:220px} }
+
+.stars { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.star { position:absolute; width:3px; height:3px; background:var(--gold); border-radius:50%; animation:twinkle 2s infinite alternate; }
+@keyframes twinkle { from{opacity:.2;transform:scale(1)} to{opacity:1;transform:scale(1.5)} }
+
+/* SPLASH */
+.splash-emojis { position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; pointer-events:none; z-index:1; }
+.splash-emoji { position:absolute; font-size:30px; animation:floatEmoji linear infinite; }
+@keyframes floatEmoji {
+  0%   { transform:translateY(110vh) rotate(0deg); opacity:0; }
+  10%  { opacity:.8; }
+  90%  { opacity:.8; }
+  100% { transform:translateY(-10vh) rotate(360deg); opacity:0; }
+}
+.splash-content { position:relative; z-index:10; display:flex; flex-direction:column; align-items:center; text-align:center; padding:30px 24px; max-width:440px; width:100%; }
+.splash-title {
+  font-family:'Rakkas',cursive; font-size:62px; color:var(--gold); line-height:1; margin-bottom:4px;
+  text-shadow:0 0 40px rgba(255,179,0,1),3px 3px 0 #e53935,0 0 80px rgba(255,100,0,.6);
+  animation:titlePulse 2s ease-in-out infinite alternate;
+}
+@keyframes titlePulse {
+  from { text-shadow:0 0 30px rgba(255,179,0,.8),3px 3px 0 #e53935; }
+  to   { text-shadow:0 0 60px rgba(255,179,0,1),3px 3px 0 #e53935,0 0 100px rgba(255,100,0,.8); }
+}
+.splash-subtitle { font-family:'Rakkas',cursive; font-size:26px; color:#fff; text-shadow:1px 1px 0 rgba(255,179,0,.6),0 0 20px rgba(255,179,0,.4); margin-bottom:20px; letter-spacing:2px; }
+.splash-decos { font-size:36px; margin-bottom:10px; letter-spacing:6px; animation:decoSway 3s ease-in-out infinite alternate; }
+@keyframes decoSway { from{transform:scale(1) rotate(-2deg)} to{transform:scale(1.08) rotate(2deg)} }
+.splash-divider { width:200px; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:14px auto; border-radius:2px; }
+.splash-creator-label { font-size:12px; color:rgba(255,224,130,.7); font-weight:700; margin-bottom:3px; letter-spacing:1px; }
+.splash-creator-name { font-family:'Rakkas',cursive; font-size:21px; color:var(--gold); text-shadow:0 0 15px rgba(255,179,0,.6); margin-bottom:28px; }
+.splash-btn {
+  padding:16px 52px; background:linear-gradient(135deg,#e53935,#ff6f00);
+  color:#fff; border:none; border-radius:50px; font-size:20px; font-weight:900;
+  font-family:'Rakkas',cursive; cursor:pointer; transition:all .3s; letter-spacing:1px;
+  animation:btnGlow 1.5s ease-in-out infinite alternate;
+}
+@keyframes btnGlow {
+  from { box-shadow:0 8px 30px rgba(229,57,53,.5); transform:translateY(0); }
+  to   { box-shadow:0 12px 40px rgba(255,111,0,.8),0 0 50px rgba(255,179,0,.3); transform:translateY(-3px); }
+}
+.splash-btn:hover { transform:translateY(-4px) scale(1.05); }
+.lang-screen-title { font-family:'Rakkas',cursive; font-size:32px; color:var(--gold); text-align:center; text-shadow:0 0 20px rgba(255,179,0,.9),2px 2px 0 #e53935; margin-bottom:4px; }
+.lang-screen-sub { text-align:center; font-size:13px; color:#5d4037; font-weight:700; margin-bottom:18px; }
+
+.screen { display:none; position:relative; z-index:10; min-height:100vh; align-items:center; justify-content:center; flex-direction:column; padding:20px; }
+.screen.active { display:flex; }
+
+.card {
+  background:linear-gradient(145deg,#ffffff 0%,#fff8e1 100%);
+  border:3px solid var(--gold); border-radius:24px; padding:34px 28px;
+  max-width:480px; width:100%;
+  box-shadow:0 0 60px rgba(255,179,0,.5),0 0 120px rgba(229,57,53,.3),0 20px 60px rgba(0,0,0,.4);
+  position:relative; overflow:hidden;
+  animation:slideIn .4s ease;
+}
+.card::before { content:'✦'; position:absolute; top:12px; right:16px; color:var(--gold); font-size:20px; opacity:.5; }
+.card::after  { content:'✦'; position:absolute; bottom:12px; left:16px; color:var(--gold); font-size:20px; opacity:.5; }
+@keyframes slideIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+.title-xl { font-family:'Rakkas',cursive; font-size:50px; color:var(--gold); text-align:center; text-shadow:0 0 30px rgba(255,179,0,.9),2px 2px 0 #e53935; line-height:1; margin-bottom:6px; }
+.title-lg  { font-family:'Rakkas',cursive; font-size:30px; color:#b71c1c; text-align:center; margin-bottom:6px; text-shadow:1px 1px 0 rgba(255,179,0,.4); }
+.subtitle  { text-align:center; color:#5d4037; font-weight:700; font-size:13px; margin-bottom:24px; }
+.ornament  { text-align:center; color:var(--gold); font-size:16px; opacity:.7; margin:8px 0; }
+
+.lang-btn {
+  display:flex; align-items:center; gap:12px; width:100%;
+  padding:13px 18px; margin-bottom:9px;
+  border:2px solid var(--gold); border-radius:14px;
+  background:linear-gradient(135deg,#fff8e1,#ffffff);
+  cursor:pointer; transition:all .3s;
+  font-size:16px; font-family:'Tajawal',sans-serif; color:#1b1b2f; font-weight:700;
+}
+.lang-btn:hover { background:linear-gradient(135deg,var(--gold),var(--orange)); color:#fff; transform:translateX(6px); }
+.lang-flag { font-size:24px; }
+
+.dots { display:flex; justify-content:center; gap:8px; margin-bottom:16px; }
+.dot { width:10px; height:10px; border-radius:50%; background:#e0e0e0; transition:background .3s; }
+.dot.active { background:var(--orange); box-shadow:0 0 8px rgba(255,111,0,.6); }
+.dot.done   { background:var(--green); }
+
+.gender-row { display:flex; gap:12px; }
+.gender-btn { flex:1; padding:20px 10px; border:3px solid #e0e0e0; border-radius:18px; background:white; cursor:pointer; transition:all .3s; text-align:center; font-family:'Tajawal',sans-serif; }
+.gender-btn:hover,.gender-btn.selected { border-color:var(--gold); background:linear-gradient(135deg,#fff9c4,#fff8e1); transform:translateY(-4px); box-shadow:0 8px 24px rgba(255,179,0,.4); }
+.gender-icon { font-size:38px; display:block; margin-bottom:6px; }
+.gender-label { font-size:14px; font-weight:900; color:#1b1b2f; }
+
+.input-field {
+  width:100%; padding:12px 16px; border:3px solid #ffb300; border-radius:14px;
+  font-size:18px; font-family:'Tajawal',sans-serif; color:#1b1b2f;
+  background:#fffde7; outline:none; transition:border .3s; margin-bottom:8px; font-weight:700;
+}
+.input-field:focus { border-color:var(--red); box-shadow:0 0 0 3px rgba(229,57,53,.15); }
+.input-hint { font-size:12px; color:#6d4c41; text-align:center; font-weight:600; margin-bottom:16px; }
+
+.nick-preview {
+  text-align:center; font-size:20px; font-weight:900; color:#b71c1c;
+  background:linear-gradient(135deg,#fff9c4,#ffe0b2); border-radius:12px;
+  padding:11px; margin-bottom:16px; min-height:50px;
+  font-family:'Amiri',serif; letter-spacing:1px; border:2px solid var(--gold);
+}
+
+.btn-main {
+  width:100%; padding:14px; background:linear-gradient(135deg,#e53935,#ff6f00);
+  color:#fff; border:none; border-radius:14px; font-size:16px; font-weight:900;
+  font-family:'Tajawal',sans-serif; cursor:pointer; transition:all .3s;
+  box-shadow:0 6px 20px rgba(229,57,53,.5); text-shadow:0 1px 2px rgba(0,0,0,.3); margin-top:4px;
+}
+.btn-main:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(229,57,53,.6); background:linear-gradient(135deg,#c62828,#e65100); }
+.btn-secondary {
+  width:100%; padding:12px; background:transparent; color:#b71c1c;
+  border:3px solid #e53935; border-radius:14px; font-size:14px; font-weight:900;
+  font-family:'Tajawal',sans-serif; cursor:pointer; margin-top:10px; transition:all .3s;
+}
+.btn-secondary:hover { background:#e53935; color:white; }
+
+/* RULES */
+.rules-title { font-family:'Rakkas',cursive; font-size:28px; color:#b71c1c; text-align:center; margin-bottom:4px; }
+.rules-scroll { max-height:60vh; overflow-y:auto; padding-right:2px; }
+.rules-scroll::-webkit-scrollbar { width:4px; }
+.rules-scroll::-webkit-scrollbar-thumb { background:var(--gold); border-radius:4px; }
+.rules-section { margin-bottom:14px; }
+.rules-section h3 { font-size:14px; font-weight:900; color:#b71c1c; margin-bottom:7px; display:flex; align-items:center; gap:5px; }
+.item-row { display:flex; align-items:center; gap:9px; background:white; border-radius:10px; padding:8px 10px; margin-bottom:5px; border:2px solid #ffe082; }
+.item-emoji { font-size:22px; min-width:28px; text-align:center; }
+.item-info { flex:1; }
+.item-name { font-size:12px; font-weight:900; color:#1b1b2f; }
+.item-desc { font-size:11px; color:#5d4037; font-weight:600; }
+.item-score { font-size:12px; font-weight:900; padding:2px 7px; border-radius:8px; }
+.score-pos { background:#e8f5e9; color:#2e7d32; }
+.score-neg { background:#ffebee; color:#c62828; }
+.level-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.level-card { border-radius:10px; padding:9px; text-align:center; border:2px solid; }
+.level-easy   { background:#e8f5e9; border-color:#4caf50; }
+.level-medium { background:#fff9c4; border-color:#fbc02d; }
+.level-hard   { background:#ffe0b2; border-color:#ff6f00; }
+.level-ultra  { background:#fce4ec; border-color:#e53935; }
+.level-name { font-size:12px; font-weight:900; margin-bottom:2px; }
+.level-easy .level-name   { color:#2e7d32; }
+.level-medium .level-name { color:#f57f17; }
+.level-hard .level-name   { color:#e65100; }
+.level-ultra .level-name  { color:#b71c1c; }
+.level-info { font-size:10px; color:#555; font-weight:600; }
+.rule-box { background:linear-gradient(135deg,#fff9c4,#ffe0b2); border-radius:10px; padding:10px; margin-bottom:7px; border-left:4px solid var(--gold); }
+.rule-box p { font-size:12px; color:#3e2723; font-weight:600; line-height:1.5; }
+
+/* WELCOME */
+.welcome-avatar { font-size:72px; text-align:center; margin-bottom:6px; animation:bounce 1s ease infinite alternate; }
+@keyframes bounce { from{transform:translateY(0)} to{transform:translateY(-12px)} }
+.welcome-name { font-family:'Rakkas',cursive; font-size:24px; color:#b71c1c; text-align:center; margin-bottom:4px; }
+.welcome-text { text-align:center; color:#3e2723; font-size:13px; font-weight:600; margin-bottom:18px; line-height:1.6; }
+.stats-row { display:flex; gap:9px; margin-bottom:18px; }
+.stat-box { flex:1; text-align:center; background:linear-gradient(135deg,#fff9c4,#ffe0b2); border-radius:12px; padding:9px 5px; border:2px solid var(--gold); }
+.stat-val { font-size:18px; font-weight:900; color:#b71c1c; }
+.stat-lbl { font-size:10px; color:#5d4037; font-weight:700; margin-top:2px; }
+
+/* GAME */
+#gameScreen { padding:0; }
+.game-header {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:7px 14px; background:linear-gradient(135deg,#0d1b2a,#1a2a1a);
+  border-bottom:3px solid var(--gold); box-shadow:0 4px 20px rgba(0,0,0,.5);
+}
+.game-score { font-family:'Rakkas',cursive; font-size:19px; color:#ffb300; text-shadow:0 0 10px rgba(255,179,0,.7); }
+.game-lives { font-size:17px; }
+.game-player-name { font-size:10px; color:#ffe082; font-weight:700; }
+.level-badge { padding:3px 9px; border-radius:20px; font-size:11px; font-weight:900; font-family:'Tajawal',sans-serif; text-align:center; }
+.badge-easy   { background:#4caf50; color:white; }
+.badge-medium { background:#fbc02d; color:#1b1b2f; }
+.badge-hard   { background:#ff6f00; color:white; }
+.badge-ultra  { background:linear-gradient(135deg,#e53935,#9c27b0); color:white; animation:pulseBadge 1s infinite alternate; }
+@keyframes pulseBadge { from{box-shadow:0 0 5px #e53935} to{box-shadow:0 0 15px #9c27b0,0 0 5px #e53935} }
+#gameCanvas { display:block; margin:56px auto 0; max-width:100%; }
+
+/* LEVEL TOAST */
+.level-toast {
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0);
+  background:linear-gradient(135deg,#e53935,#ff6f00); color:white;
+  border-radius:20px; padding:18px 36px; font-family:'Rakkas',cursive; font-size:26px;
+  text-align:center; z-index:300; box-shadow:0 20px 60px rgba(0,0,0,.5);
+  transition:transform .3s; pointer-events:none;
+}
+.level-toast.show { transform:translate(-50%,-50%) scale(1); }
+
+/* QUIZ */
+.quiz-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.9); z-index:200; align-items:center; justify-content:center; padding:20px; }
+.quiz-overlay.active { display:flex; }
+.quiz-card {
+  background:#ffffff; border:4px solid var(--gold); border-radius:20px;
+  padding:24px 20px; max-width:420px; width:100%; text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.5); animation:slideIn .3s ease;
+}
+.quiz-timer-bar-wrap { width:100%; height:8px; background:#f0f0f0; border-radius:8px; margin-bottom:12px; overflow:hidden; }
+.quiz-timer-bar { height:100%; border-radius:8px; background:linear-gradient(90deg,#2e7d32,#ffb300,#e53935); transition:width .9s linear; width:100%; }
+.quiz-timer-num { font-size:13px; font-weight:900; text-align:right; color:#888; margin-bottom:4px; }
+.quiz-obstacle { font-size:36px; margin-bottom:6px; }
+.quiz-q { font-family:'Amiri',serif; font-size:18px; color:#1b1b2f; margin-bottom:18px; line-height:1.5; font-weight:700; }
+.quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.quiz-opt {
+  padding:12px 8px; border:3px solid var(--gold); border-radius:12px;
+  background:#fffde7; cursor:pointer; font-size:13px;
+  font-family:'Tajawal',sans-serif; transition:all .2s; color:#1b1b2f; font-weight:700;
+}
+.quiz-opt:hover { background:linear-gradient(135deg,#ffb300,#ff6f00); color:white; border-color:#ff6f00; }
+.quiz-opt.correct { background:#2e7d32; color:white; border-color:#1b5e20; }
+.quiz-opt.wrong   { background:#c62828; color:white; border-color:#b71c1c; }
+.quiz-result  { font-size:16px; font-weight:900; margin-top:10px; min-height:24px; }
+.quiz-pending { font-size:12px; color:#888; margin-top:4px; min-height:18px; }
+
+/* GAME OVER */
+.gameover-emoji { font-size:64px; text-align:center; margin-bottom:8px; }
+.gameover-title { font-family:'Rakkas',cursive; font-size:32px; color:#b71c1c; text-align:center; margin-bottom:4px; }
+.final-score { font-size:44px; font-weight:900; color:#ff6f00; text-align:center; font-family:'Rakkas',cursive; text-shadow:2px 2px 0 #ffb300,0 0 20px rgba(255,111,0,.6); margin:8px 0; }
+.final-msg-win { text-align:center; font-size:22px; font-weight:900; color:#b71c1c; margin-bottom:14px; font-family:'Rakkas',cursive; text-shadow:1px 1px 0 rgba(255,179,0,.5); line-height:1.4; }
+.final-msg-lose { text-align:center; font-size:14px; color:#5d4037; font-weight:700; margin-bottom:14px; }
+
+.float-item { position:fixed; font-size:20px; animation:floatUp 1s ease-out forwards; pointer-events:none; z-index:50; font-weight:900; }
+@keyframes floatUp { 0%{opacity:1;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-60px) scale(1.4)} }
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<!-- SCREEN 0: SPLASH -->
+<div class="screen active" id="splashScreen">
+  <div class="splash-emojis" id="splashEmojis"></div>
+  <div class="splash-content">
+    <div class="splash-decos">🌸🥚🌿🌺🥜</div>
+    <div class="splash-title">NOVRUZ</div>
+    <div class="splash-subtitle">🎮 OYUNU 🎮</div>
+    <div class="splash-decos">🔥🐑🪨💨</div>
+    <div class="splash-divider"></div>
+    <div class="splash-creator-label" id="splashCreatorLabel">Qurulşuçu / Developer / Разработчик / Geliştirici</div>
+    <div class="splash-creator-name">✦ Yusif Abbasov ✦</div>
+    <button class="splash-btn" onclick="showScreen('langScreen')">🌸 BAŞLA! 🌸</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: LANGUAGE -->
+<div class="screen" id="langScreen">
+  <div class="card">
+    <div class="lang-screen-title">🌸 Novruz Oyunu</div>
+    <div class="ornament">✦ ✦ ✦</div>
+    <div class="lang-screen-sub">Zəhmət olmasa dil seçin / Please select a language</div>
+    <button class="lang-btn" onclick="selectLang('az')"><span class="lang-flag">🇦🇿</span><div><div>Azərbaycan dili</div><div style="font-size:11px;color:#888;font-weight:400">Azərbaycan</div></div></button>
+    <button class="lang-btn" onclick="selectLang('en')"><span class="lang-flag" style="font-size:18px;font-weight:900;color:#1b1b2f;background:#f0f0f0;border-radius:8px;padding:2px 7px;">EN</span><div><div>English</div><div style="font-size:11px;color:#888;font-weight:400">English</div></div></button>
+    <button class="lang-btn" onclick="selectLang('ru')"><span class="lang-flag">🇷🇺</span><div><div>Русский</div><div style="font-size:11px;color:#888;font-weight:400">Rus dili</div></div></button>
+    <button class="lang-btn" onclick="selectLang('tr')"><span class="lang-flag">🇹🇷</span><div><div>Türkçe</div><div style="font-size:11px;color:#888;font-weight:400">Türk dili</div></div></button>
+  </div>
+</div>
+
+<!-- SCREEN 2: RULES -->
+<div class="screen" id="rulesScreen">
+  <div class="card">
+    <div class="rules-title" id="rulesTitleEl">📋 Oyun Qaydaları</div>
+    <div class="ornament">✦ ✦ ✦</div>
+    <div class="rules-scroll">
+
+      <div class="rules-section">
+        <h3 id="r_collect">✅ Topla — Xal Qazan</h3>
+        <div class="item-row"><div class="item-emoji">🥚</div><div class="item-info"><div class="item-name" id="r_egg">Novruz Yumurtası</div><div class="item-desc" id="r_egg_d">Bayramın rəmzi</div></div><div class="item-score score-pos" id="r_pt">+1 xal</div></div>
+        <div class="item-row"><div class="item-emoji">🍬</div><div class="item-info"><div class="item-name" id="r_candy">Şirniyyat</div><div class="item-desc" id="r_candy_d">Şəkər-şirniyyat</div></div><div class="item-score score-pos" id="r_pt2">+1 xal</div></div>
+        <div class="item-row"><div class="item-emoji">🌿</div><div class="item-info"><div class="item-name" id="r_samani">Səməni</div><div class="item-desc" id="r_samani_d">Novruz süfrəsinin bəzəyi</div></div><div class="item-score score-pos" id="r_pt3">+1 xal</div></div>
+        <div class="item-row"><div class="item-emoji">🥜</div><div class="item-info"><div class="item-name" id="r_qoz">Qoz</div><div class="item-desc" id="r_qoz_d">Novruz ləzzəti</div></div><div class="item-score score-pos" id="r_pt4">+1 xal</div></div>
+        <div class="item-row"><div class="item-emoji">🍎</div><div class="item-info"><div class="item-name" id="r_alma">Alma</div><div class="item-desc" id="r_alma_d">Süfrə meyvəsi</div></div><div class="item-score score-pos" id="r_pt5">+1 xal</div></div>
+        <div class="item-row"><div class="item-emoji">🌺</div><div class="item-info"><div class="item-name" id="r_gul">Gül</div><div class="item-desc" id="r_gul_d">Novruz gülü</div></div><div class="item-score score-pos" id="r_pt6">+1 xal</div></div>
+        <div class="item-row"><div class="item-emoji">🌸</div><div class="item-info"><div class="item-name" id="r_cicek">Çiçək</div><div class="item-desc" id="r_cicek_d">Baharın gəlişi</div></div><div class="item-score score-pos" id="r_pt7">+1 xal</div></div>
+        <div class="item-row"><div class="item-emoji">🌾</div><div class="item-info"><div class="item-name" id="r_bugda">Buğda</div><div class="item-desc" id="r_bugda_d">Bolluq rəmzi</div></div><div class="item-score score-pos" id="r_pt8">+1 xal</div></div>
+      </div>
+
+      <div class="rules-section">
+        <h3 id="r_avoid">⚠️ Qaç — Can İtirmə!</h3>
+        <div class="item-row"><div class="item-emoji">🔥</div><div class="item-info"><div class="item-name" id="r_fire">Tonqal</div><div class="item-desc" id="r_fire_d">Dəysən → can itirir + sual gəlir</div></div><div class="item-score score-neg" id="r_neg">-1 ❤️</div></div>
+        <div class="item-row"><div class="item-emoji">🐑</div><div class="item-info"><div class="item-name" id="r_sheep">Qoyun</div><div class="item-desc" id="r_sheep_d">Qonşunun qoyunu qaçıb!</div></div><div class="item-score score-neg" id="r_neg2">-1 ❤️</div></div>
+        <div class="item-row"><div class="item-emoji">🪨</div><div class="item-info"><div class="item-name" id="r_stone">Daş</div><div class="item-desc" id="r_stone_d">Yolda daş var, ehtiyatlı ol</div></div><div class="item-score score-neg" id="r_neg3">-1 ❤️</div></div>
+        <div class="item-row"><div class="item-emoji">💨</div><div class="item-info"><div class="item-name" id="r_wind">Külək</div><div class="item-desc" id="r_wind_d">Xəzri əsir, sürükləyir</div></div><div class="item-score score-neg" id="r_neg4">-1 ❤️</div></div>
+      </div>
+
+      <div class="rules-section">
+        <h3 id="r_quiz_title">❓ Maneə Sualı Sistemi</h3>
+        <div class="rule-box"><p id="r_quiz_text">🔴 Maneəyə dəydikdə <b>həm can itirirsən, həm sual gəlir</b>.<br>✅ Düz cavab versən → <b>can geri qayıdır!</b><br>❌ Səhv etsən → <b>+5 yeni sual əlavə olunur</b>.<br>📌 Düz cavab verənə qədər suallar davam edir.<br>⚡ Hər sual fərqli olur, eyni sual təkrarlanmaz!</p></div>
+      </div>
+
+      <div class="rules-section">
+        <h3 id="r_levels_title">🎮 Levellər</h3>
+        <div class="level-grid">
+          <div class="level-card level-easy"><div class="level-name" id="r_lvl_easy">🟢 Asan</div><div class="level-info" id="r_easy_info">0 – 5 xal<br>Yavaş sürət</div></div>
+          <div class="level-card level-medium"><div class="level-name" id="r_lvl_medium">🟡 Orta</div><div class="level-info" id="r_med_info">5 – 10 xal<br>Orta sürət</div></div>
+          <div class="level-card level-hard"><div class="level-name" id="r_lvl_hard">🟠 Çətin</div><div class="level-info" id="r_hard_info">10 – 15 xal<br>Sürətli</div></div>
+          <div class="level-card level-ultra"><div class="level-name" id="r_lvl_ultra">🔴 Çox Çətin</div><div class="level-info" id="r_ultra_info">15+ xal<br>30 xal → Qalib!</div></div>
+        </div>
+      </div>
+
+    </div>
+    <button class="btn-main" onclick="showScreen('genderScreen')" style="margin-top:14px" id="rulesNextBtn">İrəli →</button>
+    <button class="btn-secondary" onclick="showScreen('langScreen')" id="rulesBackBtn">← Geri</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: GENDER -->
+<div class="screen" id="genderScreen">
+  <div class="card">
+    <div class="dots"><div class="dot done"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="title-lg" id="genderTitle">Cinsiyyətini seç</div>
+    <div class="subtitle" id="genderSub">Sən kimsən?</div>
+    <div class="gender-row">
+      <div class="gender-btn" onclick="selectGender('male')" id="maleBtn"><span class="gender-icon">👨</span><div class="gender-label" id="maleLabel">Kişi</div></div>
+      <div class="gender-btn" onclick="selectGender('female')" id="femaleBtn"><span class="gender-icon">👩</span><div class="gender-label" id="femaleLabel">Qadın</div></div>
+    </div>
+    <button class="btn-main" onclick="goToAge()" id="genderNext">İrəli →</button>
+    <button class="btn-secondary" onclick="showScreen('rulesScreen')" id="genderBack">← Geri</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: AGE -->
+<div class="screen" id="ageScreen">
+  <div class="card">
+    <div class="dots"><div class="dot done"></div><div class="dot done"></div><div class="dot active"></div><div class="dot"></div></div>
+    <div class="title-lg" id="ageTitle">Yaşın neçədir?</div>
+    <div class="subtitle" id="ageSub">Yalnız yaşını yaz</div>
+    <input type="number" class="input-field" id="ageInput" placeholder="Məs: 25" min="1" max="120" style="text-align:center;font-size:30px;font-weight:900">
+    <div class="input-hint" id="ageHint">1 ilə 120 arası</div>
+    <button class="btn-main" onclick="goToNickname()" id="ageNext">İrəli →</button>
+    <button class="btn-secondary" onclick="showScreen('genderScreen')" id="ageBack">← Geri</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: NICKNAME -->
+<div class="screen" id="nicknameScreen">
+  <div class="card">
+    <div class="dots"><div class="dot done"></div><div class="dot done"></div><div class="dot done"></div><div class="dot active"></div></div>
+    <div class="title-lg" id="nickTitle">Ləqəbini seç</div>
+    <div class="subtitle" id="nickSub">Özünə bir ləqəb ver</div>
+    <input type="text" class="input-field" id="nickInput" placeholder="Məs: Tural" maxlength="20" style="text-align:center">
+    <div class="nick-preview" id="nickPreview">—</div>
+    <button class="btn-main" onclick="goToWelcome()" id="nickNext">Oyuna Gir! 🎮</button>
+    <button class="btn-secondary" onclick="showScreen('ageScreen')" id="nickBack">← Geri</button>
+  </div>
+</div>
+
+<!-- SCREEN 6: WELCOME -->
+<div class="screen" id="welcomeScreen">
+  <div class="card">
+    <div class="welcome-avatar" id="wAvatar">🧔</div>
+    <div class="welcome-name" id="wName"></div>
+    <div class="ornament">✦ ✦ ✦</div>
+    <div class="welcome-text" id="wText"></div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-val" id="wAge">—</div><div class="stat-lbl" id="wAgeL">Yaş</div></div>
+      <div class="stat-box"><div class="stat-val">0</div><div class="stat-lbl" id="wScoreL">Xal</div></div>
+      <div class="stat-box"><div class="stat-val">❤️❤️❤️</div><div class="stat-lbl" id="wLivesL">Can</div></div>
+    </div>
+    <button class="btn-main" onclick="startGame()" id="startBtn">🔥 Başla!</button>
+  </div>
+</div>
+
+<!-- SCREEN 7: GAME -->
+<div class="screen" id="gameScreen">
+  <div class="game-header">
+    <div>
+      <div class="game-score">🏆 <span id="scoreDisplay">0</span> <span id="scoreLabel">xal</span></div>
+      <div class="game-player-name" id="headerName"></div>
+    </div>
+    <div style="text-align:center">
+      <div class="game-lives" id="livesDisplay">❤️❤️❤️</div>
+      <div style="font-size:10px;color:#ffe082;font-weight:700">⏱ <span id="timerDisplay">60</span>s</div>
+    </div>
+    <div style="text-align:center">
+      <div class="level-badge badge-easy" id="levelBadge">🟢 Easy</div>
+      <div style="font-size:10px;color:#ffe082;font-weight:700;margin-top:2px"><span id="targetLabel">Hədəf</span>: <span id="targetDisplay">5</span></div>
+    </div>
+  </div>
+  <canvas id="gameCanvas" width="400" height="500"></canvas>
+</div>
+
+<!-- LEVEL UP TOAST -->
+<div class="level-toast" id="levelToast"><span id="newLevelLabel">🎉 YENİ LEVEL! 🎉</span><br><span id="toastLevelName"></span></div>
+
+<!-- QUIZ OVERLAY -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-card">
+    <div class="quiz-header-row" id="quizHeaderRow">❓ Novruz Sualı</div>
+    <div class="quiz-timer-num">⏱ <span id="quizTimerNum">15</span>s</div>
+    <div class="quiz-timer-bar-wrap"><div class="quiz-timer-bar" id="quizTimerBar"></div></div>
+    <div class="quiz-obstacle" id="quizObstacle">🔥</div>
+    <div class="quiz-q" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-result" id="quizResult"></div>
+    <div class="quiz-pending" id="quizPending"></div>
+  </div>
+</div>
+
+<!-- SCREEN 8: GAME OVER -->
+<div class="screen" id="gameoverScreen">
+  <div class="card">
+    <div class="gameover-emoji" id="goEmoji">🌸</div>
+    <div class="gameover-title" id="goTitle">Oyun Bitti!</div>
+    <div class="ornament">✦ ✦ ✦</div>
+    <div style="text-align:center;color:#3e2723;font-size:14px;font-weight:700;margin-bottom:4px" id="goMsg"></div>
+    <div class="final-score" id="finalScore">0</div>
+    <div class="final-level" id="finalLevel"></div>
+    <div id="finalMsg"></div>
+    <button class="btn-main" onclick="restartGame()" id="restartBtn">🔄 Yenidən Oyna</button>
+    <button class="btn-secondary" onclick="goToStart()" id="menuBtn">🏠 Əsas Menyu</button>
+  </div>
+</div>
+
+<script>
+// STARS
+const starsEl=document.getElementById('stars');
+for(let i=0;i<60;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';s.style.animationDuration=(1.5+Math.random()*2)+'s';starsEl.appendChild(s);}
+
+// SPLASH FLOATING EMOJIS
+const splashEmojiList=['🌸','🥚','🌿','🍎','🌺','🍬','🌾','🥜','🌸','🔥','🐑','🪨','💨','🌸','🥚','🌺'];
+const splashContainer=document.getElementById('splashEmojis');
+splashEmojiList.forEach((em,i)=>{
+  const el=document.createElement('div'); el.className='splash-emoji'; el.textContent=em;
+  el.style.left=(Math.random()*95)+'%';
+  el.style.animationDuration=(6+Math.random()*8)+'s';
+  el.style.animationDelay=(Math.random()*8)+'s';
+  splashContainer.appendChild(el);
+});
+
+// TRANSLATIONS
+const T={
+  az:{
+    genderTitle:'Cinsiyyətini seç',genderSub:'Sən kimsən?',male:'Kişi',female:'Qadın',
+    ageTitle:'Yaşın neçədir?',ageSub:'Yalnız yaşını yaz',agePlaceholder:'Məs: 25',ageHint:'1 ilə 120 arası',
+    nickTitle:'Ləqəbini seç',nickSub:'Özünə bir ləqəb ver',nickPlaceholder:'Məs: Tural',
+    suffix_male:'Bəy',suffix_female:'Xanım',
+    next:'İrəli →',enterGame:'Oyuna Gir! 🎮',startBtn:'🔥 Başla!',rulesNext:'İrəli →',back:'← Geri',
+    welcomeText:(n,a,g)=>`Xoş gəldin, <b>${n}</b>!<br>Sən ${a} yaşlı igid bir ${g==='male'?'kişisən':'qadınsan'}.<br>Süfrəni hazırlamağa hazırsan? 🌸`,
+    statAge:'Yaş',statScore:'Xal',statLives:'Can',
+    gameoverTitle:'Oyun Bitti!',
+    gameoverMsg:(n)=>`${n}, topladığın xal:`,
+    finalMsg:(s,win)=>win?'🌸 Novruz Bayramını yaxşı keçirtmisən!':'🌸 Novruzun Bayramın Yaxşı Olsun!',
+    finalLevel:(l)=>`Son level: ${l}`,
+    restart:'🔄 Yenidən Oyna',menu:'🏠 Əsas Menyu',
+    quizHeader:'❓ Novruz Sualı',
+    correct:'✅ Düz! Can geri qayıdır! ❤️',
+    correctPenalty:'✅ Düz! Növbəti sual...',
+    wrong:'❌ Səhv!',
+    penaltyStart:'⚠️ 5 cəza sualı başlayır!',
+    pending:(n)=>`${n} sual qalıb...`,
+    lostLife:'💔 5 sualı da səhv bildin — can çıxdı!',
+    rulesTitle:'📋 Oyun Qaydaları',
+    r_collect:'✅ Topla — Xal Qazan',
+    r_egg:'Novruz Yumurtası',r_egg_d:'Bayramın rəmzi',
+    r_candy:'Şirniyyat',r_candy_d:'Şəkər-şirniyyat',
+    r_samani:'Səməni',r_samani_d:'Novruz süfrəsinin bəzəyi',
+    r_qoz:'Qoz',r_qoz_d:'Novruz ləzzəti',
+    r_alma:'Alma',r_alma_d:'Süfrə meyvəsi',
+    r_gul:'Gül',r_gul_d:'Novruz gülü',
+    r_cicek:'Çiçək',r_cicek_d:'Baharın gəlişi',
+    r_bugda:'Buğda',r_bugda_d:'Bolluq rəmzi',
+    r_pt:'+1 xal',
+    r_avoid:'⚠️ Qaç — Can İtirmə!',
+    r_fire:'Tonqal',r_fire_d:'Dəysən → can itirir + sual gəlir',
+    r_sheep:'Qoyun',r_sheep_d:'Qonşunun qoyunu qaçıb!',
+    r_stone:'Daş',r_stone_d:'Yolda daş var, ehtiyatlı ol',
+    r_wind:'Külək',r_wind_d:'Xəzri əsir, sürükləyir',
+    r_neg:'-1 ❤️',
+    r_quiz_title:'❓ Maneə Sualı Sistemi',
+    r_quiz_text:'🔴 Maneəyə dəydikdə <b>həm can itirirsən, həm sual gəlir</b>.<br>✅ Düz cavab versən → <b>can geri qayıdır!</b><br>❌ Səhv etsən → <b>+5 yeni sual əlavə olunur</b>.<br>📌 Düz cavab verənə qədər suallar davam edir.',
+    r_levels_title:'🎮 Levellər',
+    r_easy_info:'0 – 5 xal<br>Yavaş sürət',r_med_info:'5 – 10 xal<br>Orta sürət',
+    r_hard_info:'10 – 15 xal<br>Sürətli',r_ultra_info:'15+ xal<br>30 xal → Qalib!',
+    scoreLabel:'xal',targetLabel:'Hədəf',newLevelLabel:'🎉 YENİ LEVEL! 🎉',
+    lvl_easy:'🟢 Asan',lvl_medium:'🟡 Orta',lvl_hard:'🟠 Çətin',lvl_ultra:'🔴 Çox Çətin',
+  },
+  en:{
+    genderTitle:'Select Gender',genderSub:'Who are you?',male:'Male',female:'Female',
+    ageTitle:'How old are you?',ageSub:'Just enter your age',agePlaceholder:'E.g: 25',ageHint:'Between 1 and 120',
+    nickTitle:'Choose Nickname',nickSub:'Give yourself a nickname',nickPlaceholder:'E.g: Alex',
+    suffix_male:'Bey',suffix_female:'Khanim',
+    next:'Next →',enterGame:'Enter Game! 🎮',startBtn:'🔥 Start!',rulesNext:'Next →',back:'← Back',
+    welcomeText:(n,a,g)=>`Welcome, <b>${n}</b>!<br>You are a brave ${a}-year-old ${g==='male'?'man':'woman'}.<br>Ready to prepare the feast? 🌸`,
+    statAge:'Age',statScore:'Score',statLives:'Lives',
+    gameoverTitle:'Game Over!',
+    gameoverMsg:(n)=>`${n}, your score:`,
+    finalMsg:(s,win)=>win?'🌸 You had a wonderful Novruz celebration!':'🌸 Happy Novruz to you!',
+    finalLevel:(l)=>`Last level: ${l}`,
+    restart:'🔄 Play Again',menu:'🏠 Main Menu',
+    quizHeader:'❓ Novruz Question',
+    correct:'✅ Correct! Life restored! ❤️',
+    correctPenalty:'✅ Correct! Next question...',
+    wrong:'❌ Wrong!',
+    penaltyStart:'⚠️ 5 penalty questions start!',
+    pending:(n)=>`${n} questions left...`,
+    lostLife:'💔 All 5 wrong — lost a life!',
+    rulesTitle:'📋 Game Rules',
+    r_collect:'✅ Collect — Earn Points',
+    r_egg:'Novruz Egg',r_egg_d:'Symbol of the holiday',
+    r_candy:'Sweets',r_candy_d:'Sugar treats',
+    r_samani:'Samani',r_samani_d:'Green Novruz decoration',
+    r_qoz:'Walnut',r_qoz_d:'Novruz treat',
+    r_alma:'Apple',r_alma_d:'Feast fruit',
+    r_gul:'Flower',r_gul_d:'Novruz flower',
+    r_cicek:'Blossom',r_cicek_d:"Spring's arrival",
+    r_bugda:'Wheat',r_bugda_d:'Symbol of abundance',
+    r_pt:'+1 pt',
+    r_avoid:'⚠️ Dodge — Don\'t Lose Lives!',
+    r_fire:'Bonfire',r_fire_d:'Hit → lose life + question',
+    r_sheep:'Sheep',r_sheep_d:"Neighbor's sheep escaped!",
+    r_stone:'Stone',r_stone_d:'Rock on the road, be careful',
+    r_wind:'Wind',r_wind_d:'Khazri blowing, sweeps you',
+    r_neg:'-1 ❤️',
+    r_quiz_title:'❓ Obstacle Quiz System',
+    r_quiz_text:'🔴 When you hit an obstacle <b>you lose a life and get a question</b>.<br>✅ Answer correctly → <b>life restored!</b><br>❌ Wrong answer → <b>+5 new questions added</b>.<br>📌 Questions continue until you answer correctly.',
+    r_levels_title:'🎮 Levels',
+    r_easy_info:'0 – 5 pts<br>Slow speed',r_med_info:'5 – 10 pts<br>Medium speed',
+    r_hard_info:'10 – 15 pts<br>Fast',r_ultra_info:'15+ pts<br>30 pts → Win!',
+    scoreLabel:'pts',targetLabel:'Target',newLevelLabel:'🎉 NEW LEVEL! 🎉',
+    lvl_easy:'🟢 Easy',lvl_medium:'🟡 Medium',lvl_hard:'🟠 Hard',lvl_ultra:'🔴 Ultra Hard',
+  },
+  ru:{
+    genderTitle:'Выбери пол',genderSub:'Кто ты?',male:'Мужчина',female:'Женщина',
+    ageTitle:'Сколько тебе лет?',ageSub:'Напиши свой возраст',agePlaceholder:'Напр: 25',ageHint:'От 1 до 120',
+    nickTitle:'Выбери псевдоним',nickSub:'Дай себе прозвище',nickPlaceholder:'Напр: Иван',
+    suffix_male:'Бей',suffix_female:'Ханым',
+    next:'Далее →',enterGame:'В игру! 🎮',startBtn:'🔥 Начать!',rulesNext:'Далее →',back:'← Назад',
+    welcomeText:(n,a,g)=>`Добро пожаловать, <b>${n}</b>!<br>Тебе ${a} лет. Ты смелый ${g==='male'?'мужчина':'женщина'}.<br>Готов накрыть праздничный стол? 🌸`,
+    statAge:'Возраст',statScore:'Очки',statLives:'Жизни',
+    gameoverTitle:'Игра окончена!',
+    gameoverMsg:(n)=>`${n}, твои очки:`,
+    finalMsg:(s,win)=>win?'🌸 Ты отлично отпраздновал Новруз!':'🌸 С праздником Новруз!',
+    finalLevel:(l)=>`Последний уровень: ${l}`,
+    restart:'🔄 Играть снова',menu:'🏠 Главное меню',
+    quizHeader:'❓ Вопрос о Новрузе',
+    correct:'✅ Верно! Жизнь восстановлена! ❤️',
+    correctPenalty:'✅ Верно! Следующий вопрос...',
+    wrong:'❌ Неверно!',
+    penaltyStart:'⚠️ Начинаются 5 штрафных вопросов!',
+    pending:(n)=>`Осталось ${n} вопросов...`,
+    lostLife:'💔 Все 5 неверно — жизнь потеряна!',
+    rulesTitle:'📋 Правила игры',
+    r_collect:'✅ Собирай — Зарабатывай очки',
+    r_egg:'Яйцо Новруза',r_egg_d:'Символ праздника',
+    r_candy:'Сладости',r_candy_d:'Сахарные угощения',
+    r_samani:'Сямяни',r_samani_d:'Зелёное украшение Новруза',
+    r_qoz:'Грецкий орех',r_qoz_d:'Угощение Новруза',
+    r_alma:'Яблоко',r_alma_d:'Праздничный фрукт',
+    r_gul:'Цветок',r_gul_d:'Цветок Новруза',
+    r_cicek:'Цветение',r_cicek_d:'Приход весны',
+    r_bugda:'Пшеница',r_bugda_d:'Символ изобилия',
+    r_pt:'+1 очко',
+    r_avoid:'⚠️ Уворачивайся — Не теряй жизни!',
+    r_fire:'Костёр',r_fire_d:'Удар → теряешь жизнь + вопрос',
+    r_sheep:'Овца',r_sheep_d:'Овца соседа убежала!',
+    r_stone:'Камень',r_stone_d:'Камень на дороге, осторожно',
+    r_wind:'Ветер',r_wind_d:'Хазри дует, сносит тебя',
+    r_neg:'-1 ❤️',
+    r_quiz_title:'❓ Система вопросов',
+    r_quiz_text:'🔴 При столкновении с препятствием <b>теряешь жизнь и получаешь вопрос</b>.<br>✅ Правильный ответ → <b>жизнь восстанавливается!</b><br>❌ Неверный → <b>добавляются 5 новых вопросов</b>.<br>📌 Вопросы продолжаются до правильного ответа.',
+    r_levels_title:'🎮 Уровни',
+    r_easy_info:'0 – 5 очков<br>Медленно',r_med_info:'5 – 10 очков<br>Средняя скорость',
+    r_hard_info:'10 – 15 очков<br>Быстро',r_ultra_info:'15+ очков<br>30 очков → Победа!',
+    scoreLabel:'очков',targetLabel:'Цель',newLevelLabel:'🎉 НОВЫЙ УРОВЕНЬ! 🎉',
+    lvl_easy:'🟢 Лёгкий',lvl_medium:'🟡 Средний',lvl_hard:'🟠 Сложный',lvl_ultra:'🔴 Очень сложный',
+  },
+  tr:{
+    genderTitle:'Cinsiyetini seç',genderSub:'Sen kimsin?',male:'Erkek',female:'Kadın',
+    ageTitle:'Kaç yaşındasın?',ageSub:'Sadece yaşını yaz',agePlaceholder:'Örn: 25',ageHint:'1 ile 120 arası',
+    nickTitle:'Lakabını seç',nickSub:'Kendine bir lakap ver',nickPlaceholder:'Örn: Mehmet',
+    suffix_male:'Bey',suffix_female:'Hanım',
+    next:'İleri →',enterGame:'Oyuna Gir! 🎮',startBtn:'🔥 Başla!',rulesNext:'İleri →',back:'← Geri',
+    welcomeText:(n,a,g)=>`Hoş geldin, <b>${n}</b>!<br>Sen ${a} yaşında cesur bir ${g==='male'?'erkeksin':'kadınsın'}.<br>Sofrayı hazırlamaya hazır mısın? 🌸`,
+    statAge:'Yaş',statScore:'Puan',statLives:'Can',
+    gameoverTitle:'Oyun Bitti!',
+    gameoverMsg:(n)=>`${n}, topladığın puan:`,
+    finalMsg:(s,win)=>win?'🌸 Nevruz Bayramını güzel geçirdin!':'🌸 Nevruz Bayramın Kutlu Olsun!',
+    finalLevel:(l)=>`Son seviye: ${l}`,
+    restart:'🔄 Tekrar Oyna',menu:'🏠 Ana Menü',
+    quizHeader:'❓ Nevruz Sorusu',
+    correct:'✅ Doğru! Can geri geldi! ❤️',
+    correctPenalty:'✅ Doğru! Sonraki soru...',
+    wrong:'❌ Yanlış!',
+    penaltyStart:'⚠️ 5 ceza sorusu başlıyor!',
+    pending:(n)=>`${n} soru kaldı...`,
+    lostLife:'💔 5 soruyu da yanlış — can gitti!',
+    rulesTitle:'📋 Oyun Kuralları',
+    r_collect:'✅ Topla — Puan Kazan',
+    r_egg:'Nevruz Yumurtası',r_egg_d:'Bayramın sembolü',
+    r_candy:'Tatlılar',r_candy_d:'Şeker ikramlar',
+    r_samani:'Semeni',r_samani_d:'Nevruz sofrasının süsü',
+    r_qoz:'Ceviz',r_qoz_d:'Nevruz lezzeti',
+    r_alma:'Elma',r_alma_d:'Sofra meyvesi',
+    r_gul:'Çiçek',r_gul_d:'Nevruz çiçeği',
+    r_cicek:'Çiçeklenme',r_cicek_d:'Baharın gelişi',
+    r_bugda:'Buğday',r_bugda_d:'Bereket sembolü',
+    r_pt:'+1 puan',
+    r_avoid:'⚠️ Kaç — Can Kaybetme!',
+    r_fire:'Ateş',r_fire_d:'Çarparsan → can kaybı + soru',
+    r_sheep:'Koyun',r_sheep_d:'Komşunun koyunu kaçtı!',
+    r_stone:'Taş',r_stone_d:'Yolda taş var, dikkatli ol',
+    r_wind:'Rüzgar',r_wind_d:'Hazar esiyor, sürüklüyor',
+    r_neg:'-1 ❤️',
+    r_quiz_title:'❓ Engel Soru Sistemi',
+    r_quiz_text:'🔴 Engele çarptığında <b>hem can kaybedersin hem soru gelir</b>.<br>✅ Doğru cevap → <b>can geri döner!</b><br>❌ Yanlış → <b>+5 yeni soru eklenir</b>.<br>📌 Doğru cevaplayana kadar sorular devam eder.',
+    r_levels_title:'🎮 Seviyeler',
+    r_easy_info:'0 – 5 puan<br>Yavaş hız',r_med_info:'5 – 10 puan<br>Orta hız',
+    r_hard_info:'10 – 15 puan<br>Hızlı',r_ultra_info:'15+ puan<br>30 puan → Kazandın!',
+    scoreLabel:'puan',targetLabel:'Hedef',newLevelLabel:'🎉 YENİ SEVİYE! 🎉',
+    lvl_easy:'🟢 Kolay',lvl_medium:'🟡 Orta',lvl_hard:'🟠 Zor',lvl_ultra:'🔴 Çok Zor',
+  }
+};
+
+// ALL QUIZ QUESTIONS (Novruz themed, Azerbaijani)
+const ALL_QUESTIONS=[
+  {q:'Novruz bayramı neçənci martda qeyd olunur?',opts:['20 Mart','21 Mart','22 Mart','1 Aprel'],ans:1},
+  {q:'Novruz süfrəsinin əsas yaşıl rəmzi nədir?',opts:['Cücərti','Səməni','Şamama','Çiçək'],ans:1},
+  {q:'Tonqal üstündən tullanma adəti nəyi simvollaşdırır?',opts:['Gücü','Müdrikliyi','Bəlaların yanmasını','Şansı'],ans:2},
+  {q:'"Axır çərşənbə" nə deməkdir?',opts:['Son bazar ertəsi','Son çərşənbə','Son cümə','İlk çərşənbə'],ans:1},
+  {q:'Novruzda rəngli yumurta nəyi simvollaşdırır?',opts:['Yeni həyat','Bolluq','Xoşbəxtlik','Hamısı'],ans:3},
+  {q:'Novruz sözü hansı mənaya gəlir?',opts:['Yeni il','Yeni gün','Yeni ay','Yeni fəsil'],ans:1},
+  {q:'Novruz hansı fəsilin gəlişini qeyd edir?',opts:['Qış','Payız','Yaz','Yay'],ans:2},
+  {q:'Xıdır İlyas kimdir?',opts:['Novruz pəhləvanı','Müqəddəs qoca','Padşah','Şair'],ans:1},
+  {q:'Novruz süfrəsindəki "S" ilə başlayan neçə şey olur?',opts:['5','7','9','3'],ans:1},
+  {q:'Novruzda kimin evinin damına gedib səs salırlar?',opts:['Qonşunun','Böyüklərin','Sevgilinin','Hamısının'],ans:1},
+  {q:'Novruz bayramı neçə gün qeyd olunur?',opts:['3','5','13','7'],ans:2},
+  {q:'Novruz çərşənbələri neçədir?',opts:['2','3','4','5'],ans:2},
+  {q:'Su çərşənbəsi hansı element üzərindədir?',opts:['Od','Su','Torpaq','Külək'],ans:1},
+  {q:'Od çərşənbəsinin rəmzi nədir?',opts:['Tonqal','Şam','Günəş','Ulduz'],ans:0},
+  {q:'Torpaq çərşənbəsindəki adət nədir?',opts:['Su içmək','Torpaq tökmək','Ağac əkmək','Rəqs etmək'],ans:2},
+  {q:'Novruz süfrəsindəki güzgü nəyi simvollaşdırır?',opts:['Gözəlliyi','Aydınlığı','Keçən ili görməyi','Xoşbəxtliyi'],ans:2},
+  {q:'Xonça nədir?',opts:['Novruz yeməyi','Bəzədilmiş süfrə','Novruz mahnısı','Oyun'],ans:1},
+  {q:'Novruz UNESCO tərəfindən nə vaxt qeydiyyata alındı?',opts:['2001','2009','2016','2020'],ans:1},
+  {q:'Şamama nədir?',opts:['Novruz çiçəyi','Qovun növü','Konfet növü','Oyun aləti'],ans:1},
+  {q:'Novruz süfrəsindəki şam nəyi simvollaşdırır?',opts:['İşığı','Ailəni','Hər ailə üzvünü','Bayramı'],ans:2},
+  {q:'Kosa-kosa nədir?',opts:['Novruz yeməyi','Novruz oyunu','Novruz mahnısı','Novruz geyimi'],ans:1},
+  {q:'Novruzda plov üçün istifadə olunan əsas ərzaq nədir?',opts:['Buğda','Düyü','Arpa','Qarğıdalı'],ans:1},
+  {q:'Novruz gecəsi hansı gecədir?',opts:['20 Mart gecəsi','21 Mart gecəsi','22 Mart gecəsi','Son çərşənbə gecəsi'],ans:3},
+  {q:'Novruzda "papaq atma" adəti nədir?',opts:['Bəxt sınamaq','Oyun oynamaq','Hədiyyə istəmək','Rəqs etmək'],ans:2},
+  {q:'Novruz süfrəsindəki balıq nəyi simvollaşdırır?',opts:['Dənizi','Həyatı','Bolluğu','Gözəlliyi'],ans:2},
+  {q:'Çərşənbə axşamı tonqalı nə vaxt yandırılır?',opts:['Səhər','Günorta','Axşam','Gecə yarısı'],ans:2},
+  {q:'Novruz süfrəsindəki sirkə nəyi simvollaşdırır?',opts:['Uzun ömrü','Kədəri','Səbri','Şirinliyi'],ans:0},
+  {q:'Küləş nədir?',opts:['Novruz yeməyi','Novruz güləşi','Novruz rəqsi','Novruz çiçəyi'],ans:1},
+  {q:'Novruzda qırmızı yumurta nəyi ifadə edir?',opts:['Qanı','Sevgini','Həyatı və bolluğu','Gücü'],ans:2},
+  {q:'Novruz bayramında "yeddi S" süfrəsindəki "sir" nədir?',opts:['Sarımsaq','Sümük','Çörək','Soğan'],ans:0},
+];
+
+// LEVELS — adlar dilə görə T[state.lang] vasitəsilə alınır
+function getLevels(){
+  const t=T[state.lang];
+  return [
+    {name:t.lvl_easy,   badge:'badge-easy',  minScore:0,  targetScore:5,  itemSpeed:2,  obstSpeed:2.2, itemFreq:70, obstFreq:35},
+    {name:t.lvl_medium, badge:'badge-medium',minScore:5,  targetScore:10, itemSpeed:3,  obstSpeed:3.2, itemFreq:60, obstFreq:28},
+    {name:t.lvl_hard,   badge:'badge-hard',  minScore:10, targetScore:15, itemSpeed:4.2,obstSpeed:4.5, itemFreq:50, obstFreq:22},
+    {name:t.lvl_ultra,  badge:'badge-ultra', minScore:15, targetScore:30, itemSpeed:5.8,obstSpeed:6,   itemFreq:40, obstFreq:16},
+  ];
+}
+function getLevelIdx(score){const L=getLevels();for(let i=L.length-1;i>=0;i--)if(score>=L[i].minScore)return i;return 0;}
+
+const ITEMS=['🥚','🌸','🌿','🍎','🌺','🍬','🌾','🥜'];
+const ITEM_SCORE={'🥚':1,'🌸':1,'🌿':1,'🍎':1,'🌺':1,'🍬':1,'🌾':1,'🥜':1};
+const OBSTACLES=[{emoji:'🔥',name:'Tonqal'},{emoji:'🐑',name:'Qoyun'},{emoji:'🪨',name:'Daş'},{emoji:'💨',name:'Külək'}];
+
+let state={lang:'az',gender:null,age:null,nickname:'',fullName:'',score:0,lives:3,timer:60,gameRunning:false,timerInterval:null,currentLevelIdx:0};
+let quizActive=false,pendingQuizQueue=[],quizFromObstacle=null,usedQIdxs=[];
+let canvas,ctx,player,items,obstacles,frameCount,animFrame;
+
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+function selectLang(lang){state.lang=lang;applyTranslations();showScreen('rulesScreen');}
+
+function applyTranslations(){
+  const t=T[state.lang];
+  // Screens
+  document.getElementById('rulesTitleEl').textContent=t.rulesTitle;
+  document.getElementById('genderTitle').textContent=t.genderTitle;
+  document.getElementById('genderSub').textContent=t.genderSub;
+  document.getElementById('maleLabel').textContent=t.male;
+  document.getElementById('femaleLabel').textContent=t.female;
+  document.getElementById('ageTitle').textContent=t.ageTitle;
+  document.getElementById('ageSub').textContent=t.ageSub;
+  document.getElementById('ageInput').placeholder=t.agePlaceholder;
+  document.getElementById('ageHint').textContent=t.ageHint;
+  document.getElementById('nickTitle').textContent=t.nickTitle;
+  document.getElementById('nickSub').textContent=t.nickSub;
+  document.getElementById('nickInput').placeholder=t.nickPlaceholder;
+  // Buttons
+  document.getElementById('genderNext').textContent=t.next;
+  document.getElementById('ageNext').textContent=t.next;
+  document.getElementById('nickNext').textContent=t.enterGame;
+  document.getElementById('startBtn').textContent=t.startBtn;
+  document.getElementById('rulesNextBtn').textContent=t.rulesNext;
+  document.getElementById('rulesBackBtn').textContent=t.back;
+  document.getElementById('genderBack').textContent=t.back;
+  document.getElementById('ageBack').textContent=t.back;
+  document.getElementById('nickBack').textContent=t.back;
+  // Welcome stats
+  document.getElementById('wAgeL').textContent=t.statAge;
+  document.getElementById('wScoreL').textContent=t.statScore;
+  document.getElementById('wLivesL').textContent=t.statLives;
+  // Game over
+  document.getElementById('restartBtn').textContent=t.restart;
+  document.getElementById('menuBtn').textContent=t.menu;
+  // Game HUD
+  document.getElementById('scoreLabel').textContent=t.scoreLabel;
+  document.getElementById('targetLabel').textContent=t.targetLabel;
+  document.getElementById('newLevelLabel').textContent=t.newLevelLabel;
+  // Rules screen content
+  document.getElementById('r_collect').textContent=t.r_collect;
+  document.getElementById('r_egg').textContent=t.r_egg;
+  document.getElementById('r_egg_d').textContent=t.r_egg_d;
+  document.getElementById('r_candy').textContent=t.r_candy;
+  document.getElementById('r_candy_d').textContent=t.r_candy_d;
+  document.getElementById('r_samani').textContent=t.r_samani;
+  document.getElementById('r_samani_d').textContent=t.r_samani_d;
+  document.getElementById('r_qoz').textContent=t.r_qoz;
+  document.getElementById('r_qoz_d').textContent=t.r_qoz_d;
+  document.getElementById('r_alma').textContent=t.r_alma;
+  document.getElementById('r_alma_d').textContent=t.r_alma_d;
+  document.getElementById('r_gul').textContent=t.r_gul;
+  document.getElementById('r_gul_d').textContent=t.r_gul_d;
+  document.getElementById('r_cicek').textContent=t.r_cicek;
+  document.getElementById('r_cicek_d').textContent=t.r_cicek_d;
+  document.getElementById('r_bugda').textContent=t.r_bugda;
+  document.getElementById('r_bugda_d').textContent=t.r_bugda_d;
+  ['r_pt','r_pt2','r_pt3','r_pt4','r_pt5','r_pt6','r_pt7','r_pt8'].forEach(id=>document.getElementById(id).textContent=t.r_pt);
+  document.getElementById('r_avoid').textContent=t.r_avoid;
+  document.getElementById('r_fire').textContent=t.r_fire;
+  document.getElementById('r_fire_d').textContent=t.r_fire_d;
+  document.getElementById('r_sheep').textContent=t.r_sheep;
+  document.getElementById('r_sheep_d').textContent=t.r_sheep_d;
+  document.getElementById('r_stone').textContent=t.r_stone;
+  document.getElementById('r_stone_d').textContent=t.r_stone_d;
+  document.getElementById('r_wind').textContent=t.r_wind;
+  document.getElementById('r_wind_d').textContent=t.r_wind_d;
+  ['r_neg','r_neg2','r_neg3','r_neg4'].forEach(id=>document.getElementById(id).textContent=t.r_neg);
+  document.getElementById('r_quiz_title').textContent=t.r_quiz_title;
+  document.getElementById('r_quiz_text').innerHTML=t.r_quiz_text;
+  document.getElementById('r_levels_title').textContent=t.r_levels_title;
+  document.getElementById('r_lvl_easy').textContent=t.lvl_easy;
+  document.getElementById('r_lvl_medium').textContent=t.lvl_medium;
+  document.getElementById('r_lvl_hard').textContent=t.lvl_hard;
+  document.getElementById('r_lvl_ultra').textContent=t.lvl_ultra;
+  document.getElementById('r_easy_info').innerHTML=t.r_easy_info;
+  document.getElementById('r_med_info').innerHTML=t.r_med_info;
+  document.getElementById('r_hard_info').innerHTML=t.r_hard_info;
+  document.getElementById('r_ultra_info').innerHTML=t.r_ultra_info;
+}
+
+function selectGender(g){
+  state.gender=g;
+  document.getElementById('maleBtn').classList.toggle('selected',g==='male');
+  document.getElementById('femaleBtn').classList.toggle('selected',g==='female');
+}
+
+function goToAge(){if(!state.gender){alert('Zəhmət olmasa cinsiyyəti seçin!');return;}showScreen('ageScreen');}
+
+function goToNickname(){
+  const age=parseInt(document.getElementById('ageInput').value);
+  if(!age||age<1||age>120){alert('Zəhmət olmasa düzgün yaş daxil edin!');return;}
+  state.age=age;
+  document.getElementById('nickInput').value='';
+  document.getElementById('nickPreview').textContent='—';
+  showScreen('nicknameScreen');
+  document.getElementById('nickInput').oninput=updateNickPreview;
+}
+
+function updateNickPreview(){
+  const t=T[state.lang];
+  const val=document.getElementById('nickInput').value.trim();
+  const sfx=state.gender==='male'?t.suffix_male:t.suffix_female;
+  if(val){document.getElementById('nickPreview').textContent=val+' '+sfx;state.fullName=val+' '+sfx;}
+  else{document.getElementById('nickPreview').textContent='—';state.fullName='';}
+}
+
+function goToWelcome(){
+  const val=document.getElementById('nickInput').value.trim();
+  if(!val){alert('Zəhmət olmasa ləqəbinizi daxil edin!');return;}
+  const t=T[state.lang];
+  const sfx=state.gender==='male'?t.suffix_male:t.suffix_female;
+  state.nickname=val; state.fullName=val+' '+sfx;
+  document.getElementById('wAvatar').textContent=state.gender==='male'?'🧔':'👩';
+  document.getElementById('wName').textContent=state.fullName;
+  document.getElementById('wText').innerHTML=t.welcomeText(state.fullName,state.age,state.gender);
+  document.getElementById('wAge').textContent=state.age;
+  showScreen('welcomeScreen');
+}
+
+function startGame(){
+  state.score=0; state.lives=3; state.timer=60; state.gameRunning=true; state.currentLevelIdx=0;
+  quizActive=false; pendingQuizQueue=[]; quizFromObstacle=null; usedQIdxs=[];
+  document.getElementById('scoreDisplay').textContent='0';
+  document.getElementById('livesDisplay').textContent='❤️❤️❤️';
+  document.getElementById('timerDisplay').textContent='60';
+  document.getElementById('headerName').textContent=state.fullName;
+  updateLevelDisplay();
+  showScreen('gameScreen');
+
+  canvas=document.getElementById('gameCanvas');
+  ctx=canvas.getContext('2d');
+  const maxW=Math.min(400,window.innerWidth-4);
+  canvas.width=maxW; canvas.height=500;
+
+  player={x:canvas.width/2-25,y:canvas.height-90,w:50,h:60,speed:6,dir:0};
+  items=[]; obstacles=[]; frameCount=0;
+
+  document.onkeydown=(e)=>{if(e.key==='ArrowLeft')player.dir=-1;if(e.key==='ArrowRight')player.dir=1;};
+  document.onkeyup=(e)=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight')player.dir=0;};
+  let txS=0;
+  canvas.ontouchstart=(e)=>{txS=e.touches[0].clientX;};
+  canvas.ontouchend=(e)=>{const dx=e.changedTouches[0].clientX-txS;if(Math.abs(dx)>20){player.dir=dx>0?1:-1;setTimeout(()=>player.dir=0,200);}};
+  canvas.onclick=(e)=>{const r=canvas.getBoundingClientRect();player.dir=e.clientX-r.left<canvas.width/2?-1:1;setTimeout(()=>player.dir=0,150);};
+
+  if(state.timerInterval)clearInterval(state.timerInterval);
+  state.timerInterval=setInterval(()=>{
+    if(!state.gameRunning||quizActive)return;
+    state.timer--;document.getElementById('timerDisplay').textContent=state.timer;
+    if(state.timer<=0)endGame();
+  },1000);
+
+  if(animFrame)cancelAnimationFrame(animFrame);
+  gameLoop();
+}
+
+function gameLoop(){if(!state.gameRunning)return;if(!quizActive)update();draw();animFrame=requestAnimationFrame(gameLoop);}
+
+function update(){
+  frameCount++;
+  const lvl=getLevels()[state.currentLevelIdx];
+  player.x+=player.dir*player.speed;
+  player.x=Math.max(0,Math.min(canvas.width-player.w,player.x));
+
+  if(frameCount%lvl.itemFreq===0){
+    items.push({x:Math.random()*(canvas.width-34),y:-34,emoji:ITEMS[Math.floor(Math.random()*ITEMS.length)],speed:lvl.itemSpeed+Math.random()*1.5,size:28+Math.random()*10});
+  }
+  if(frameCount%lvl.obstFreq===0){
+    const ob=OBSTACLES[Math.floor(Math.random()*OBSTACLES.length)];
+    obstacles.push({x:Math.random()*(canvas.width-34),y:-34,emoji:ob.emoji,name:ob.name,speed:lvl.obstSpeed+Math.random()*1.5});
+  }
+
+  items.forEach(i=>i.y+=i.speed);
+  obstacles.forEach(o=>o.y+=o.speed);
+
+  items=items.filter(item=>{
+    if(item.y>canvas.height)return false;
+    if(item.x<player.x+player.w&&item.x+34>player.x&&item.y<player.y+player.h&&item.y+34>player.y){
+      const pts=ITEM_SCORE[item.emoji]||5;
+      addScore(pts);
+      spawnFloat(item.x,item.y,'+'+pts,'#2e7d32');
+      return false;
+    }
+    return true;
+  });
+
+  obstacles=obstacles.filter(obs=>{
+    if(obs.y>canvas.height)return false;
+    if(obs.x<player.x+player.w-8&&obs.x+34>player.x+8&&obs.y<player.y+player.h-8&&obs.y+34>player.y+8){
+      // Can itirilmir bilavasitə — sual gəlir, sualda həll olunur
+      spawnFloat(obs.x,obs.y,'⚠️','#ff6f00');
+      triggerObstacleQuiz(obs);
+      return false;
+    }
+    return true;
+  });
+}
+
+function addScore(pts){
+  const prev=state.currentLevelIdx;
+  state.score+=pts;
+  document.getElementById('scoreDisplay').textContent=state.score;
+  const newIdx=getLevelIdx(state.score);
+  if(newIdx>prev){
+    state.currentLevelIdx=newIdx;
+    updateLevelDisplay();
+    showLevelToast(getLevels()[newIdx].name);
+  }
+  if(state.score>=30)endGame(true);
+}
+
+function updateLevelDisplay(){
+  const lvl=getLevels()[state.currentLevelIdx];
+  const badge=document.getElementById('levelBadge');
+  badge.textContent=lvl.name; badge.className='level-badge '+lvl.badge;
+  document.getElementById('targetDisplay').textContent=lvl.targetScore;
+}
+
+function showLevelToast(levelName){
+  const toast=document.getElementById('levelToast');
+  document.getElementById('toastLevelName').textContent=levelName;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),2000);
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const bgC=[['#1a0a00','#2d1a00','#3d1a00'],['#1a1a00','#2d2d00','#3d2000'],['#200a00','#3d1000','#4d1500'],['#300010','#4d0020','#6d0030']];
+  const g=ctx.createLinearGradient(0,0,0,canvas.height);
+  const bc=bgC[state.currentLevelIdx];
+  g.addColorStop(0,bc[0]);g.addColorStop(.6,bc[1]);g.addColorStop(1,bc[2]);
+  ctx.fillStyle=g;ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#5a2d00';ctx.fillRect(0,canvas.height-20,canvas.width,20);
+  ctx.fillStyle='rgba(255,200,66,.5)';
+  for(let i=0;i<12;i++)ctx.fillRect((i*71+frameCount*.15)%canvas.width,(i*53)%280,2,2);
+  items.forEach(item=>{ctx.font=item.size+'px serif';ctx.fillText(item.emoji,item.x,item.y+item.size);});
+  obstacles.forEach(obs=>{ctx.save();ctx.shadowColor='#ff0000';ctx.shadowBlur=10;ctx.font='32px serif';ctx.fillText(obs.emoji,obs.x,obs.y+32);ctx.restore();});
+  ctx.font='50px serif';
+  const pE=state.gender==='male'?'🧔':'👩';
+  ctx.fillText(pE,player.x,player.y+player.h+Math.sin(frameCount*.2)*3);
+  ctx.fillStyle='rgba(255,200,66,.7)';
+  ctx.font='bold 13px Tajawal,sans-serif';ctx.textAlign='center';
+  ctx.fillText('← Sol       Sağ →',canvas.width/2,canvas.height-5);ctx.textAlign='left';
+}
+
+function spawnFloat(x,y,text,color){
+  const el=document.createElement('div');el.className='float-item';el.textContent=text;el.style.color=color;
+  const r=canvas.getBoundingClientRect();el.style.left=(r.left+x)+'px';el.style.top=(r.top+y+60)+'px';
+  document.body.appendChild(el);setTimeout(()=>el.remove(),1000);
+}
+
+function updateLives(){
+  const h=['','❤️','❤️❤️','❤️❤️❤️'];
+  document.getElementById('livesDisplay').textContent=h[Math.max(0,state.lives)]||'💔';
+}
+
+// QUIZ SYSTEM
+// pendingQuizQueue: növbədə gözləyən suallar
+// quizPenaltyMode: true olsa — bu 5 cəza sualı rejimindədir
+// quizPenaltyRemaining: cəza suallarından neçəsi qalıb
+// quizPenaltyWrongCount: cəza suallarında neçə səhv edilib
+
+let quizPenaltyMode = false;
+let quizPenaltyRemaining = 0;
+let quizTimerInterval = null;
+
+function startQuizTimer(onExpire) {
+  let secs = 15;
+  document.getElementById('quizTimerNum').textContent = secs;
+  document.getElementById('quizTimerBar').style.width = '100%';
+  document.getElementById('quizTimerBar').style.transition = 'none';
+  // force reflow
+  document.getElementById('quizTimerBar').offsetWidth;
+  document.getElementById('quizTimerBar').style.transition = 'width 1s linear';
+
+  clearInterval(quizTimerInterval);
+  quizTimerInterval = setInterval(()=>{
+    secs--;
+    document.getElementById('quizTimerNum').textContent = secs;
+    const pct = (secs / 15) * 100;
+    document.getElementById('quizTimerBar').style.width = pct + '%';
+    if(secs <= 0){
+      clearInterval(quizTimerInterval);
+      onExpire();
+    }
+  }, 1000);
+}
+
+function stopQuizTimer() {
+  clearInterval(quizTimerInterval);
+  quizTimerInterval = null;
+}
+
+function getUniqueQ(){
+  const avail=ALL_QUESTIONS.map((_,i)=>i).filter(i=>!usedQIdxs.includes(i));
+  if(avail.length===0){ usedQIdxs=[]; }
+  const pool=ALL_QUESTIONS.map((_,i)=>i).filter(i=>!usedQIdxs.includes(i));
+  const idx=pool[Math.floor(Math.random()*pool.length)];
+  usedQIdxs.push(idx);
+  return ALL_QUESTIONS[idx];
+}
+
+function triggerObstacleQuiz(obs){
+  // Maneəyə dəydikdə: 1 sual ver
+  pendingQuizQueue = [getUniqueQ()];
+  quizPenaltyMode = false;
+  quizPenaltyRemaining = 0;
+  quizFromObstacle = obs;
+  quizActive = true;
+  showNextQuiz();
+}
+
+function showNextQuiz(){
+  if(pendingQuizQueue.length === 0){ closeQuiz(); return; }
+  const q = pendingQuizQueue.shift();
+  const t = T[state.lang];
+
+  document.getElementById('quizHeaderRow').textContent = t.quizHeader;
+  document.getElementById('quizObstacle').textContent = quizFromObstacle ? quizFromObstacle.emoji : '❓';
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizResult').textContent = '';
+
+  // Cəza rejimindədirsə neçə sual qaldığını göstər
+  if(quizPenaltyMode && pendingQuizQueue.length >= 0){
+    const remaining = pendingQuizQueue.length + 1; // bu sual + növbədəkilər
+    document.getElementById('quizPending').textContent = t.pending(remaining);
+  } else {
+    document.getElementById('quizPending').textContent = '';
+  }
+
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  let correctIdx = q.ans;
+  q.opts.forEach((opt,i)=>{
+    const btn = document.createElement('button'); btn.className='quiz-opt'; btn.textContent=opt;
+    btn.onclick = ()=>answerQuiz(i, correctIdx, btn, optsEl);
+    optsEl.appendChild(btn);
+  });
+  document.getElementById('quizOverlay').classList.add('active');
+
+  // 15 saniyəlik timer başlat
+  startQuizTimer(()=>{
+    // Vaxt bitdi — səhv kimi hesabla
+    const btns2 = document.getElementById('quizOptions').querySelectorAll('.quiz-opt');
+    btns2.forEach(b=>b.onclick=null);
+    if(btns2[correctIdx]) btns2[correctIdx].classList.add('correct');
+    document.getElementById('quizResult').textContent = '⏰ Vaxt bitti!';
+    document.getElementById('quizResult').style.color = '#c62828';
+    handleWrongAnswer();
+  });
+}
+
+function answerQuiz(chosen, correct, btn, optsEl){
+  stopQuizTimer();
+  const t = T[state.lang];
+  const btns = optsEl.querySelectorAll('.quiz-opt');
+  btns.forEach(b=>b.onclick=null);
+
+  if(chosen === correct){
+    // DÜZGÜN CAVAB
+    btn.classList.add('correct');
+
+    if(quizPenaltyMode){
+      // Cəza rejimindədir — düz bildi → can geri + bütün suallar dayanır
+      document.getElementById('quizResult').textContent = t.correct;
+      document.getElementById('quizResult').style.color = '#2e7d32';
+      state.lives = Math.min(3, state.lives + 1);
+      updateLives();
+      pendingQuizQueue = []; // qalan cəza sualları ləğv edilir
+      setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); closeQuiz(); }, 1400);
+    } else {
+      // Normal sual — düz bildi, can geri qayıdır, oyun davam edir
+      document.getElementById('quizResult').textContent = t.correct;
+      document.getElementById('quizResult').style.color = '#2e7d32';
+      state.lives = Math.min(3, state.lives + 1);
+      updateLives();
+      setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); closeQuiz(); }, 1400);
+    }
+
+  } else {
+    // SƏHV CAVAB
+    btn.classList.add('wrong');
+    btns[correct].classList.add('correct');
+
+    if(quizPenaltyMode){
+      // Cəza sualını da səhv bildi — sadəcə növbəti sual gəlir, qalan azalır
+      document.getElementById('quizResult').textContent = t.wrong;
+      document.getElementById('quizResult').style.color = '#c62828';
+
+      if(pendingQuizQueue.length === 0){
+        // 5 cəza sualının hamısı bitti, hamısını səhv bildi — can çıxır
+        state.lives--;
+        updateLives();
+        document.getElementById('quizPending').textContent = t.lostLife;
+        if(state.lives <= 0){
+          setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); quizActive=false; endGame(); }, 1500);
+          return;
+        }
+        // Can qalıb — cəza rejimi bitdi, oyun davam edir
+        setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); closeQuiz(); }, 1600);
+      } else {
+        document.getElementById('quizPending').textContent = t.pending(pendingQuizQueue.length);
+        setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); showNextQuiz(); }, 1400);
+      }
+
+    } else {
+      // İlk normal sualı səhv bildi — 1 can itirir + 5 cəza sualı əlavə olunur
+      document.getElementById('quizResult').textContent = t.wrong;
+      document.getElementById('quizResult').style.color = '#c62828';
+      state.lives--;
+      updateLives();
+      if(state.lives <= 0){
+        setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); quizActive=false; endGame(); }, 1500);
+        return;
+      }
+      // 5 cəza sualı yarat
+      const penaltyQs = [];
+      for(let i=0; i<5; i++) penaltyQs.push(getUniqueQ());
+      pendingQuizQueue = penaltyQs;
+      quizPenaltyMode = true;
+      quizPenaltyRemaining = 5;
+      document.getElementById('quizPending').textContent = t.penaltyStart;
+      setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); showNextQuiz(); }, 1600);
+    }
+  }
+}
+
+function closeQuiz(){
+  stopQuizTimer();
+  document.getElementById('quizOverlay').classList.remove('active');
+  quizActive = false;
+  quizFromObstacle = null;
+  quizPenaltyMode = false;
+  quizPenaltyRemaining = 0;
+  pendingQuizQueue = [];
+}
+
+function handleWrongAnswer(){
+  const t = T[state.lang];
+  document.getElementById('quizResult').style.color = '#c62828';
+
+  if(quizPenaltyMode){
+    document.getElementById('quizResult').textContent = t.wrong;
+    if(pendingQuizQueue.length === 0){
+      state.lives--;
+      updateLives();
+      document.getElementById('quizPending').textContent = t.lostLife;
+      if(state.lives <= 0){
+        setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); quizActive=false; endGame(); }, 1500);
+        return;
+      }
+      setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); closeQuiz(); }, 1600);
+    } else {
+      document.getElementById('quizPending').textContent = t.pending(pendingQuizQueue.length);
+      setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); showNextQuiz(); }, 1400);
+    }
+  } else {
+    document.getElementById('quizResult').textContent = t.wrong;
+    state.lives--;
+    updateLives();
+    if(state.lives <= 0){
+      setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); quizActive=false; endGame(); }, 1500);
+      return;
+    }
+    const penaltyQs = [];
+    for(let i=0; i<5; i++) penaltyQs.push(getUniqueQ());
+    pendingQuizQueue = penaltyQs;
+    quizPenaltyMode = true;
+    document.getElementById('quizPending').textContent = t.penaltyStart;
+    setTimeout(()=>{ document.getElementById('quizOverlay').classList.remove('active'); showNextQuiz(); }, 1600);
+  }
+}
+
+function endGame(win=false){
+  state.gameRunning=false;clearInterval(state.timerInterval);cancelAnimationFrame(animFrame);
+  document.getElementById('quizOverlay').classList.remove('active');quizActive=false;
+  const t=T[state.lang];const s=state.score;const lvlName=getLevels()[state.currentLevelIdx].name;
+  const emoji=win?'🏆🌸':'😅';
+  document.getElementById('goEmoji').textContent=emoji;
+  document.getElementById('goTitle').textContent=t.gameoverTitle;
+  document.getElementById('goMsg').innerHTML=t.gameoverMsg(state.fullName);
+  document.getElementById('finalScore').textContent=s+' xal';
+  document.getElementById('finalLevel').textContent=t.finalLevel(lvlName);
+  const finalMsgEl = document.getElementById('finalMsg');
+  finalMsgEl.textContent = t.finalMsg(s,win);
+  finalMsgEl.className = win ? 'final-msg-win' : 'final-msg-lose';
+  showScreen('gameoverScreen');
+}
+
+function restartGame(){
+  clearInterval(state.timerInterval);cancelAnimationFrame(animFrame);
+  startGame();
+}
+
+function goToStart(){
+  state.lang='az';state.gender=null;state.age=null;state.nickname='';state.fullName='';
+  state.score=0;state.lives=3;state.timer=60;state.currentLevelIdx=0;
+  clearInterval(state.timerInterval);cancelAnimationFrame(animFrame);
+  document.getElementById('maleBtn').classList.remove('selected');
+  document.getElementById('femaleBtn').classList.remove('selected');
+  document.getElementById('ageInput').value='';
+  document.getElementById('nickInput').value='';
+  document.getElementById('nickPreview').textContent='—';
+  showScreen('splashScreen');
+}
+</script>
+</body>
+</html>
